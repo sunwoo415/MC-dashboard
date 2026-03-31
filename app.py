@@ -1,4 +1,3 @@
-
 import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
@@ -17,11 +16,16 @@ SKH_CSS = """
     --sk-light-orange: #fff2e8;
     --sk-light-red: #fff0f0;
     --sk-border: #f2c3a5;
+    --sk-border-soft: #f1ddd1;
     --sk-text: #1f2937;
     --sk-muted: #6b7280;
     --card-bg: #ffffff;
+    --panel-bg: #fffdfb;
+    --table-header-bg: #fff1e8;
+    --table-header-text: #8b3a10;
+    --table-cell-bg: #ffffff;
 }
-html, body, [class*="css"]  {
+html, body, [class*="css"] {
     font-family: "Segoe UI", Arial, sans-serif;
     color: var(--sk-text);
 }
@@ -29,16 +33,17 @@ html, body, [class*="css"]  {
     background: linear-gradient(180deg, #fffaf7 0%, #fffdfb 100%);
 }
 .block-container {
-    padding-top: 1.2rem;
+    padding-top: 1.15rem;
     padding-bottom: 2rem;
-    max-width: 1500px;
+    max-width: 1520px;
 }
 .app-hero {
-    background: linear-gradient(90deg, rgba(234,91,12,0.12) 0%, rgba(216,58,52,0.08) 100%);
+    background: linear-gradient(100deg, rgba(234,91,12,0.14) 0%, rgba(216,58,52,0.08) 100%);
     border: 1px solid var(--sk-border);
-    border-radius: 18px;
-    padding: 20px 24px;
-    margin-bottom: 14px;
+    border-radius: 22px;
+    padding: 22px 26px;
+    margin-bottom: 16px;
+    box-shadow: 0 10px 24px rgba(31,41,55,0.05);
 }
 .hero-top {
     display: flex;
@@ -50,7 +55,7 @@ html, body, [class*="css"]  {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 7px 12px;
+    padding: 8px 13px;
     border-radius: 999px;
     background: white;
     border: 1px solid var(--sk-border);
@@ -66,32 +71,34 @@ html, body, [class*="css"]  {
     display: inline-block;
 }
 .hero-title {
-    font-size: 1.55rem;
+    font-size: 1.65rem;
     font-weight: 800;
     color: var(--sk-text);
     margin: 0;
+    letter-spacing: -0.02em;
 }
 .hero-sub {
     color: var(--sk-muted);
-    font-size: 0.95rem;
+    font-size: 0.96rem;
     margin: 0;
+    line-height: 1.45;
 }
 .section-title {
-    font-size: 1.05rem;
+    font-size: 1.07rem;
     font-weight: 800;
     color: var(--sk-text);
-    margin-top: 0.2rem;
+    margin-top: 0.25rem;
     margin-bottom: 0.8rem;
 }
 .metric-card {
-    background: var(--card-bg);
+    background: linear-gradient(180deg, #ffffff 0%, #fffdfa 100%);
     border: 1px solid #f2e3d9;
     border-left: 5px solid var(--sk-orange);
-    border-radius: 14px;
+    border-radius: 16px;
     padding: 14px 16px;
-    box-shadow: 0 4px 12px rgba(17,24,39,0.04);
+    box-shadow: 0 8px 20px rgba(17,24,39,0.045);
     margin-bottom: 10px;
-    min-height: 112px;
+    min-height: 116px;
 }
 .metric-label {
     font-size: 0.85rem;
@@ -108,13 +115,14 @@ html, body, [class*="css"]  {
     font-size: 0.84rem;
     color: var(--sk-muted);
     margin-top: 8px;
+    line-height: 1.35;
 }
 .panel-card {
-    background: var(--card-bg);
+    background: linear-gradient(180deg, #ffffff 0%, var(--panel-bg) 100%);
     border: 1px solid #f2e3d9;
-    border-radius: 16px;
-    padding: 14px 16px 10px 16px;
-    box-shadow: 0 4px 12px rgba(17,24,39,0.04);
+    border-radius: 18px;
+    padding: 15px 16px 12px 16px;
+    box-shadow: 0 8px 20px rgba(17,24,39,0.045);
     margin-bottom: 14px;
 }
 .small-tag {
@@ -126,7 +134,7 @@ html, body, [class*="css"]  {
     background: var(--sk-light-red);
     border-radius: 999px;
     border: 1px solid #f1c5c3;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 .note-box {
     border-left: 4px solid var(--sk-orange);
@@ -141,9 +149,10 @@ html, body, [class*="css"]  {
     background: #fff8f3;
     border: 1px solid #f2d7c3;
     border-left: 5px solid var(--sk-red);
-    border-radius: 14px;
-    padding: 14px 16px;
+    border-radius: 16px;
+    padding: 15px 16px;
     margin-bottom: 12px;
+    box-shadow: 0 8px 20px rgba(17,24,39,0.04);
 }
 .summary-title {
     font-weight: 800;
@@ -154,19 +163,34 @@ html, body, [class*="css"]  {
     margin: 0;
     padding-left: 18px;
     color: var(--sk-text);
+    line-height: 1.5;
 }
 div[data-testid="stDataFrame"] {
-    border: 1px solid #f2e3d9;
-    border-radius: 12px;
+    border: 1px solid var(--sk-border-soft);
+    border-radius: 14px;
     overflow: hidden;
+}
+div[data-testid="stDataFrame"] [role="columnheader"] {
+    background: var(--table-header-bg) !important;
+    color: var(--table-header-text) !important;
+    font-weight: 700 !important;
+    border-bottom: 1px solid #efdbc9 !important;
+}
+div[data-testid="stDataFrame"] [role="gridcell"] {
+    background: var(--table-cell-bg) !important;
+    color: var(--sk-text) !important;
+    border-bottom: 1px solid #f6ebe2 !important;
+}
+div[data-testid="stDataFrame"] [role="row"]:nth-child(even) [role="gridcell"] {
+    background: #fffaf6 !important;
 }
 .stTabs [data-baseweb="tab-list"] {
     gap: 8px;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
 }
 .stTabs [data-baseweb="tab"] {
-    height: 44px;
-    border-radius: 12px;
+    height: 46px;
+    border-radius: 13px;
     background: #fff6f2;
     color: #7c4a35;
     border: 1px solid #f2d3c2;
@@ -198,25 +222,20 @@ hr.soft {
 
 st.markdown(SKH_CSS, unsafe_allow_html=True)
 
-
 def load_workbook(uploaded_file):
     xls = pd.ExcelFile(uploaded_file)
     sheet_names = xls.sheet_names
     if "MC_v1" not in sheet_names or "MC_v2" not in sheet_names:
         raise ValueError("Input workbook must contain 'MC_v1' and 'MC_v2' sheets.")
-
     v1 = pd.read_excel(uploaded_file, sheet_name="MC_v1")
     uploaded_file.seek(0)
     v2 = pd.read_excel(uploaded_file, sheet_name="MC_v2")
     uploaded_file.seek(0)
-
     specs = None
     if "Specs" in sheet_names:
         specs = pd.read_excel(uploaded_file, sheet_name="Specs")
         uploaded_file.seek(0)
-
     return specs, v1, v2
-
 
 def build_default_specs(v1: pd.DataFrame, v2: pd.DataFrame) -> pd.DataFrame:
     common_cols = [c for c in v1.columns if c in v2.columns]
@@ -227,7 +246,6 @@ def build_default_specs(v1: pd.DataFrame, v2: pd.DataFrame) -> pd.DataFrame:
             continue
         if pd.api.types.is_numeric_dtype(v1[c]) and pd.api.types.is_numeric_dtype(v2[c]):
             metric_cols.append(c)
-
     rows = []
     for c in metric_cols:
         rows.append({
@@ -240,11 +258,9 @@ def build_default_specs(v1: pd.DataFrame, v2: pd.DataFrame) -> pd.DataFrame:
         })
     return pd.DataFrame(rows)
 
-
 def normalize_specs(specs: pd.DataFrame, v1: pd.DataFrame, v2: pd.DataFrame) -> pd.DataFrame:
     if specs is None or specs.empty:
         specs = build_default_specs(v1, v2)
-
     specs = specs.copy()
     if "display_name" not in specs.columns:
         specs["display_name"] = specs["metric"]
@@ -252,14 +268,12 @@ def normalize_specs(specs: pd.DataFrame, v1: pd.DataFrame, v2: pd.DataFrame) -> 
         specs["unit"] = ""
     if "enabled" not in specs.columns:
         specs["enabled"] = "Y"
-
     specs = specs[["metric", "display_name", "rule_type", "spec_value", "unit", "enabled"]]
     valid_metrics = set(v1.columns).intersection(set(v2.columns))
     specs = specs[specs["metric"].isin(valid_metrics)].reset_index(drop=True)
     if specs.empty:
         raise ValueError("No valid metrics found. Add numeric metric columns to both MC_v1 and MC_v2.")
     return specs
-
 
 def evaluate_metric(series: pd.Series, rule_type: str, spec_value: float) -> pd.Series:
     if rule_type == "min":
@@ -270,7 +284,6 @@ def evaluate_metric(series: pd.Series, rule_type: str, spec_value: float) -> pd.
         return series.abs() <= spec_value
     raise ValueError(f"Unsupported rule_type: {rule_type}")
 
-
 def compute_margin(series: pd.Series, rule_type: str, spec_value: float) -> pd.Series:
     if rule_type == "min":
         return series - spec_value
@@ -280,33 +293,28 @@ def compute_margin(series: pd.Series, rule_type: str, spec_value: float) -> pd.S
         return spec_value - series.abs()
     raise ValueError(f"Unsupported rule_type: {rule_type}")
 
-
 def summarize_version(df: pd.DataFrame, specs: pd.DataFrame, version_name: str):
     detail = df.copy()
     summary_rows = []
     active_specs = specs[specs["enabled"].astype(str).str.upper() == "Y"].reset_index(drop=True)
     if active_specs.empty:
         raise ValueError("At least one spec must be enabled.")
-
     for _, spec in active_specs.iterrows():
         metric = spec["metric"]
         display_name = spec["display_name"]
         rule_type = spec["rule_type"]
         spec_value = float(spec["spec_value"])
         unit = spec["unit"]
-
         pass_col = f"{metric}_pass"
         margin_col = f"{metric}_margin"
         detail[pass_col] = evaluate_metric(detail[metric], rule_type, spec_value)
         detail[margin_col] = compute_margin(detail[metric], rule_type, spec_value)
-
         if rule_type == "min":
             mean_minus_spec = detail[metric].mean() - spec_value
         elif rule_type == "max":
             mean_minus_spec = spec_value - detail[metric].mean()
         else:
             mean_minus_spec = spec_value - detail[metric].abs().mean()
-
         summary_rows.append({
             "version": version_name,
             "metric": metric,
@@ -323,18 +331,15 @@ def summarize_version(df: pd.DataFrame, specs: pd.DataFrame, version_name: str):
             "yield_pct": 100.0 * detail[pass_col].mean(),
             "mean_minus_spec": mean_minus_spec,
         })
-
     pass_cols = [f"{m}_pass" for m in active_specs["metric"]]
     margin_cols = [f"{m}_margin" for m in active_specs["metric"]]
     detail["overall_pass"] = detail[pass_cols].all(axis=1)
     detail["worst_margin"] = detail[margin_cols].min(axis=1)
-
     critical_metric_names = []
     for _, row in detail[margin_cols].iterrows():
         metric_margin_map = {col.replace("_margin", ""): row[col] for col in margin_cols}
         critical_metric_names.append(min(metric_margin_map, key=metric_margin_map.get))
     detail["critical_metric"] = critical_metric_names
-
     failed_metric_list = []
     fail_count_list = []
     for _, row in detail.iterrows():
@@ -343,7 +348,6 @@ def summarize_version(df: pd.DataFrame, specs: pd.DataFrame, version_name: str):
         fail_count_list.append(len(failed))
     detail["failed_metrics"] = failed_metric_list
     detail["num_failed_metrics"] = fail_count_list
-
     overall = pd.DataFrame([{
         "version": version_name,
         "fixed_corner": detail["corner"].iloc[0] if "corner" in detail.columns else "",
@@ -354,10 +358,8 @@ def summarize_version(df: pd.DataFrame, specs: pd.DataFrame, version_name: str):
         "overall_fail_count": int((~detail["overall_pass"]).sum()),
         "overall_yield_pct": 100.0 * detail["overall_pass"].mean(),
     }])
-
     summary = pd.DataFrame(summary_rows).sort_values("metric").reset_index(drop=True)
     return active_specs, summary, overall, detail
-
 
 def compare_versions(summary_v1: pd.DataFrame, summary_v2: pd.DataFrame) -> pd.DataFrame:
     merged = summary_v1.merge(
@@ -370,14 +372,12 @@ def compare_versions(summary_v1: pd.DataFrame, summary_v2: pd.DataFrame) -> pd.D
         merged[f"{col}_delta_v2_minus_v1"] = merged[f"{col}_v2"] - merged[f"{col}_v1"]
     return merged.sort_values("metric").reset_index(drop=True)
 
-
 def build_fail_ranking(detail: pd.DataFrame, specs: pd.DataFrame, version_name: str) -> pd.DataFrame:
     rows = []
     for metric in specs["metric"]:
         fail_count = int((~detail[f"{metric}_pass"]).sum())
         rows.append({"version": version_name, "metric": metric, "fail_count": fail_count})
     return pd.DataFrame(rows).sort_values(["fail_count", "metric"], ascending=[False, True]).reset_index(drop=True)
-
 
 def build_fail_decomposition(detail: pd.DataFrame, version_name: str) -> pd.DataFrame:
     fail_df = detail.loc[~detail["overall_pass"], ["failed_metrics", "num_failed_metrics"]].copy()
@@ -390,14 +390,12 @@ def build_fail_decomposition(detail: pd.DataFrame, version_name: str) -> pd.Data
             "fail_pct_of_total_runs": 0.0,
             "fail_type": "none",
         }])
-
     grouped = fail_df.groupby(["failed_metrics", "num_failed_metrics"]).size().reset_index(name="fail_count")
     grouped["version"] = version_name
     grouped["fail_pct_of_total_runs"] = 100.0 * grouped["fail_count"] / len(detail)
     grouped["fail_type"] = grouped["num_failed_metrics"].apply(lambda x: "single" if x == 1 else "multi")
     cols = ["version", "failed_metrics", "num_failed_metrics", "fail_count", "fail_pct_of_total_runs", "fail_type"]
     return grouped[cols].sort_values(["fail_count", "num_failed_metrics"], ascending=[False, True]).reset_index(drop=True)
-
 
 def build_near_fail_samples(detail: pd.DataFrame, specs: pd.DataFrame, version_name: str, n: int = 10) -> pd.DataFrame:
     metric_cols = specs["metric"].tolist()
@@ -408,7 +406,6 @@ def build_near_fail_samples(detail: pd.DataFrame, specs: pd.DataFrame, version_n
     near_fail.insert(0, "version", version_name)
     return near_fail.reset_index(drop=True)
 
-
 def build_worst_samples(detail: pd.DataFrame, specs: pd.DataFrame, version_name: str, n: int = 10) -> pd.DataFrame:
     metric_cols = specs["metric"].tolist()
     meta_cols = [c for c in ["run", "overall_pass", "worst_margin", "critical_metric", "failed_metrics", "num_failed_metrics"] if c in detail.columns]
@@ -417,14 +414,12 @@ def build_worst_samples(detail: pd.DataFrame, specs: pd.DataFrame, version_name:
     out.insert(0, "version", version_name)
     return out.reset_index(drop=True)
 
-
 def empirical_cdf(values):
     s = pd.Series(values).dropna().sort_values().to_list()
     if not s:
         return [], []
     y = [(i + 1) / len(s) for i in range(len(s))]
     return s, y
-
 
 def plot_histogram(v1: pd.DataFrame, v2: pd.DataFrame, metric: str, rule_type: str, spec_value: float):
     plot_v1 = v1[metric].abs() if rule_type == "absmax" else v1[metric]
@@ -439,7 +434,6 @@ def plot_histogram(v1: pd.DataFrame, v2: pd.DataFrame, metric: str, rule_type: s
     ax.legend()
     fig.tight_layout()
     return fig
-
 
 def plot_cdf(v1: pd.DataFrame, v2: pd.DataFrame, metric: str, rule_type: str, spec_value: float):
     plot_v1 = v1[metric].abs() if rule_type == "absmax" else v1[metric]
@@ -457,7 +451,6 @@ def plot_cdf(v1: pd.DataFrame, v2: pd.DataFrame, metric: str, rule_type: str, sp
     fig.tight_layout()
     return fig
 
-
 def overall_compare_long(overall_v1: pd.DataFrame, overall_v2: pd.DataFrame) -> pd.DataFrame:
     row1 = overall_v1.iloc[0].to_dict()
     row2 = overall_v2.iloc[0].to_dict()
@@ -471,7 +464,6 @@ def overall_compare_long(overall_v1: pd.DataFrame, overall_v2: pd.DataFrame) -> 
             delta = v2_val - v1_val
         rows.append({"field": field, "version_1": v1_val, "version_2": v2_val, "delta": delta})
     return pd.DataFrame(rows)
-
 
 def metric_compare_long(metric_compare: pd.DataFrame) -> pd.DataFrame:
     stats = ["mean", "sigma", "min", "max", "pass_count", "fail_count", "yield_pct", "mean_minus_spec"]
@@ -488,13 +480,11 @@ def metric_compare_long(metric_compare: pd.DataFrame) -> pd.DataFrame:
             })
     return pd.DataFrame(rows)
 
-
 def get_numeric_metric_df(detail: pd.DataFrame, active_specs: pd.DataFrame) -> pd.DataFrame:
     metric_cols = [m for m in active_specs["metric"].tolist() if m in detail.columns]
     if not metric_cols:
         return pd.DataFrame()
     return detail[metric_cols].copy()
-
 
 def plot_tradeoff_scatter(detail: pd.DataFrame, x_metric: str, y_metric: str):
     fig, ax = plt.subplots(figsize=(7, 5))
@@ -510,7 +500,6 @@ def plot_tradeoff_scatter(detail: pd.DataFrame, x_metric: str, y_metric: str):
     ax.legend()
     fig.tight_layout()
     return fig
-
 
 def plot_correlation_heatmap(corr_df: pd.DataFrame, title: str):
     fig, ax = plt.subplots(figsize=(7, 6))
@@ -532,14 +521,12 @@ def plot_correlation_heatmap(corr_df: pd.DataFrame, title: str):
     fig.tight_layout()
     return fig
 
-
 def fmt_value(val, decimals=2):
     if pd.isna(val):
         return "-"
     if isinstance(val, (int, float)):
         return f"{val:.{decimals}f}"
     return str(val)
-
 
 def render_metric_card(label, value, note="", decimals=2):
     html = f"""
@@ -550,7 +537,6 @@ def render_metric_card(label, value, note="", decimals=2):
     </div>
     """
     st.markdown(html, unsafe_allow_html=True)
-
 
 def build_summary_insights(overall_v1, overall_v2, fail_rank_v1, fail_rank_v2, near_fail_v1, near_fail_v2, metric_compare):
     lines = []
@@ -563,19 +549,16 @@ def build_summary_insights(overall_v1, overall_v2, fail_rank_v1, fail_rank_v2, n
         lines.append(f"v2 overall yield is lower than v1 by {abs(delta):.1f}%p.")
     else:
         lines.append("v1 and v2 have the same overall yield.")
-
     if not fail_rank_v1.empty:
         lines.append(f"Top fail metric in v1 is {fail_rank_v1.iloc[0]['metric']}.")
     if not fail_rank_v2.empty:
         lines.append(f"Top fail metric in v2 is {fail_rank_v2.iloc[0]['metric']}.")
-
     if not near_fail_v1.empty and "critical_metric" in near_fail_v1.columns:
         nf1 = near_fail_v1["critical_metric"].value_counts().idxmax()
         lines.append(f"Near-fail samples in v1 are dominated by {nf1}.")
     if not near_fail_v2.empty and "critical_metric" in near_fail_v2.columns:
         nf2 = near_fail_v2["critical_metric"].value_counts().idxmax()
         lines.append(f"Near-fail samples in v2 are dominated by {nf2}.")
-
     if not metric_compare.empty:
         best = metric_compare.sort_values("yield_pct_delta_v2_minus_v1", ascending=False).iloc[0]
         worst = metric_compare.sort_values("yield_pct_delta_v2_minus_v1", ascending=True).iloc[0]
@@ -583,26 +566,20 @@ def build_summary_insights(overall_v1, overall_v2, fail_rank_v1, fail_rank_v2, n
         lines.append(f"Largest yield degradation in v2 comes from {worst['metric']} ({worst['yield_pct_delta_v2_minus_v1']:.1f}%p).")
     return lines
 
-
 def build_spec_sensitivity(detail: pd.DataFrame, specs: pd.DataFrame, version_name: str, step_pct: float = 2.0) -> pd.DataFrame:
     active_specs = specs[specs["enabled"].astype(str).str.upper() == "Y"].reset_index(drop=True)
     rows = []
     if active_specs.empty:
         return pd.DataFrame()
-
     base_pass_cols = [f"{m}_pass" for m in active_specs["metric"]]
     base_yield = 100.0 * detail[base_pass_cols].all(axis=1).mean()
-
     for _, spec in active_specs.iterrows():
         metric = spec["metric"]
         rule_type = spec["rule_type"]
         spec_value = float(spec["spec_value"])
-
         spec_up = spec_value * (1.0 + step_pct / 100.0)
         spec_down = spec_value * (1.0 - step_pct / 100.0)
-
         temp = detail.copy()
-
         def overall_yield_for_changed_spec(changed_spec):
             pass_df = pd.DataFrame(index=temp.index)
             for _, s in active_specs.iterrows():
@@ -613,10 +590,8 @@ def build_spec_sensitivity(detail: pd.DataFrame, specs: pd.DataFrame, version_na
                     sv = changed_spec
                 pass_df[m] = evaluate_metric(temp[m], rt, sv)
             return 100.0 * pass_df.all(axis=1).mean()
-
         yield_up = overall_yield_for_changed_spec(spec_up)
         yield_down = overall_yield_for_changed_spec(spec_down)
-
         rows.append({
             "version": version_name,
             "metric": metric,
@@ -630,7 +605,6 @@ def build_spec_sensitivity(detail: pd.DataFrame, specs: pd.DataFrame, version_na
         })
     return pd.DataFrame(rows).sort_values("max_abs_yield_shift_pctp", ascending=False).reset_index(drop=True)
 
-
 def plot_metric_margin_bar(summary: pd.DataFrame, title: str):
     fig, ax = plt.subplots(figsize=(8, 4.8))
     ax.bar(summary["metric"], summary["mean_minus_spec"])
@@ -640,7 +614,6 @@ def plot_metric_margin_bar(summary: pd.DataFrame, title: str):
     ax.tick_params(axis='x', rotation=45)
     fig.tight_layout()
     return fig
-
 
 def plot_near_fail_critical_bar(near_fail: pd.DataFrame, title: str):
     fig, ax = plt.subplots(figsize=(7, 4.5))
@@ -656,7 +629,6 @@ def plot_near_fail_critical_bar(near_fail: pd.DataFrame, title: str):
     ax.tick_params(axis='x', rotation=45)
     fig.tight_layout()
     return fig
-
 
 st.markdown(
     """
@@ -684,7 +656,7 @@ with st.sidebar:
     st.markdown(
         """
         <div class="note-box">
-        Use an Excel file with <b>MC_v1</b> and <b>MC_v2</b>. 
+        Use an Excel file with <b>MC_v1</b> and <b>MC_v2</b>.
         <b>Specs</b> is optional and can be edited below in the main view.
         </div>
         """,
@@ -715,36 +687,17 @@ with pvt_col3:
     render_metric_card("VDD (V)", fixed_vdd, "Applied to all runs in this file.", decimals=2)
 
 st.markdown('<div class="section-title">Spec Settings</div>', unsafe_allow_html=True)
-spec_panel_col1, spec_panel_col2 = st.columns([3, 1])
-
-with spec_panel_col1:
-    st.markdown('<div class="panel-card">', unsafe_allow_html=True)
-    spec_editor = specs_base.copy()
-    spec_editor["enabled"] = spec_editor["enabled"].astype(str).str.upper().map(lambda x: True if x == "Y" else False)
-    edited_specs = st.data_editor(
-        spec_editor,
-        num_rows="dynamic",
-        use_container_width=True,
-        hide_index=True,
-        column_config={
-            "metric": st.column_config.TextColumn("metric"),
-            "display_name": st.column_config.TextColumn("display_name"),
-            "rule_type": st.column_config.SelectboxColumn("rule_type", options=["min", "max", "absmax"]),
-            "spec_value": st.column_config.NumberColumn("spec_value", format="%.4f"),
-            "unit": st.column_config.TextColumn("unit"),
-            "enabled": st.column_config.CheckboxColumn("enabled"),
-        },
-        key="spec_editor",
-    )
-    st.markdown("</div>", unsafe_allow_html=True)
-
-with spec_panel_col2:
-    enabled_count = int(specs_base["enabled"].astype(str).str.upper().eq("Y").sum()) if "enabled" in specs_base.columns else len(specs_base)
-    st.markdown('<div class="panel-card">', unsafe_allow_html=True)
-    st.markdown('<div class="small-tag">SPEC STATUS</div>', unsafe_allow_html=True)
-    render_metric_card("Metrics in sheet", len(specs_base), "Loaded from workbook or auto-generated.", decimals=0)
-    render_metric_card("Enabled metrics", enabled_count, "Only enabled specs are used in overall pass.", decimals=0)
-    st.markdown("</div>", unsafe_allow_html=True)
+st.markdown('<div class="panel-card">', unsafe_allow_html=True)
+spec_editor = specs_base.copy()
+spec_editor["enabled"] = spec_editor["enabled"].astype(str).str.upper().map(lambda x: True if x == "Y" else False)
+edited_specs = st.data_editor(
+    spec_editor,
+    num_rows="dynamic",
+    use_container_width=True,
+    hide_index=True,
+    key="spec_editor",
+)
+st.markdown("</div>", unsafe_allow_html=True)
 
 edited_specs = edited_specs.copy()
 edited_specs["enabled"] = edited_specs["enabled"].map(lambda x: "Y" if bool(x) else "N")
@@ -766,10 +719,8 @@ near_fail_v1 = build_near_fail_samples(detail_v1, active_specs_v1, "v1", n=top_n
 near_fail_v2 = build_near_fail_samples(detail_v2, active_specs_v2, "v2", n=top_n)
 worst_v1 = build_worst_samples(detail_v1, active_specs_v1, "v1", n=top_n)
 worst_v2 = build_worst_samples(detail_v2, active_specs_v2, "v2", n=top_n)
-
 sensitivity_v1 = build_spec_sensitivity(detail_v1, edited_specs, "v1", step_pct=sensitivity_step)
 sensitivity_v2 = build_spec_sensitivity(detail_v2, edited_specs, "v2", step_pct=sensitivity_step)
-
 summary_lines = build_summary_insights(overall_v1, overall_v2, fail_rank_v1, fail_rank_v2, near_fail_v1, near_fail_v2, metric_compare)
 
 tab_exec, tab_summary, tab_compare, tab_sensitivity, tab_nearviz, tab_fail, tab_near, tab_tradeoff, tab_charts, tab_raw = st.tabs(
@@ -780,7 +731,6 @@ with tab_exec:
     st.markdown('<div class="section-title">Executive Review Summary</div>', unsafe_allow_html=True)
     items = "".join([f"<li>{line}</li>" for line in summary_lines])
     st.markdown(f'<div class="summary-box"><div class="summary-title">Key findings</div><ul class="summary-list">{items}</ul></div>', unsafe_allow_html=True)
-
     c1, c2, c3 = st.columns(3)
     with c1:
         render_metric_card("v1 overall yield (%)", overall_v1.iloc[0]["overall_yield_pct"], "Current enabled-spec result.", decimals=1)
@@ -788,7 +738,6 @@ with tab_exec:
         render_metric_card("v2 overall yield (%)", overall_v2.iloc[0]["overall_yield_pct"], "Current enabled-spec result.", decimals=1)
     with c3:
         render_metric_card("Yield delta (v2-v1)", overall_v2.iloc[0]["overall_yield_pct"] - overall_v1.iloc[0]["overall_yield_pct"], "Positive means v2 improved.", decimals=1)
-
     c4, c5 = st.columns(2)
     with c4:
         st.markdown('<div class="panel-card"><div class="small-tag">Top sensitivity - v1</div>', unsafe_allow_html=True)
@@ -810,7 +759,6 @@ with tab_summary:
         st.markdown('<div class="panel-card"><div class="small-tag">VERSION 2</div>', unsafe_allow_html=True)
         st.dataframe(overall_v2.drop(columns=[c for c in ["fixed_corner", "fixed_temp_C", "fixed_vdd_V"] if c in overall_v2.columns]), use_container_width=True, hide_index=True)
         st.markdown("</div>", unsafe_allow_html=True)
-
     st.markdown('<div class="section-title">Metric Summary</div>', unsafe_allow_html=True)
     c3, c4 = st.columns(2)
     with c3:
@@ -827,7 +775,6 @@ with tab_compare:
     st.markdown('<div class="panel-card">', unsafe_allow_html=True)
     st.dataframe(overall_compare, use_container_width=True, hide_index=True)
     st.markdown("</div>", unsafe_allow_html=True)
-
     st.markdown('<div class="section-title">Metric Compare</div>', unsafe_allow_html=True)
     st.markdown('<div class="panel-card">', unsafe_allow_html=True)
     st.dataframe(metric_compare_long(metric_compare), use_container_width=True, hide_index=True)
@@ -836,8 +783,7 @@ with tab_compare:
 with tab_sensitivity:
     st.markdown('<div class="section-title">Spec Sensitivity Analysis</div>', unsafe_allow_html=True)
     st.markdown(
-        f'<div class="note-box">Each enabled spec is perturbed by ±{sensitivity_step:.0f}% while others are fixed. '
-        'The table shows how much overall yield shifts. Larger shift means that spec is more yield-sensitive.</div>',
+        f'<div class="note-box">Each enabled spec is perturbed by ±{sensitivity_step:.0f}% while others are fixed. The table shows how much overall yield shifts. Larger shift means that spec is more yield-sensitive.</div>',
         unsafe_allow_html=True,
     )
     c1, c2 = st.columns(2)
@@ -865,7 +811,6 @@ with tab_nearviz:
         st.pyplot(fig_nf2)
         plt.close(fig_nf2)
         st.markdown("</div>", unsafe_allow_html=True)
-
     c3, c4 = st.columns(2)
     with c3:
         st.markdown('<div class="panel-card"><div class="small-tag">Mean margin by metric - v1</div>', unsafe_allow_html=True)
@@ -891,7 +836,6 @@ with tab_fail:
         st.markdown('<div class="panel-card"><div class="small-tag">VERSION 2</div>', unsafe_allow_html=True)
         st.dataframe(fail_rank_v2, use_container_width=True, hide_index=True)
         st.markdown("</div>", unsafe_allow_html=True)
-
     st.markdown('<div class="section-title">Fail Decomposition</div>', unsafe_allow_html=True)
     c3, c4 = st.columns(2)
     with c3:
@@ -914,7 +858,6 @@ with tab_near:
         st.markdown('<div class="panel-card"><div class="small-tag">VERSION 2</div>', unsafe_allow_html=True)
         st.dataframe(near_fail_v2, use_container_width=True, hide_index=True)
         st.markdown("</div>", unsafe_allow_html=True)
-
     st.markdown('<div class="section-title">Worst Samples</div>', unsafe_allow_html=True)
     c3, c4 = st.columns(2)
     with c3:
@@ -947,9 +890,8 @@ with tab_tradeoff:
         st.markdown("</div>", unsafe_allow_html=True)
     with control_right:
         st.markdown('<div class="panel-card">', unsafe_allow_html=True)
-        st.dataframe(corr_df, use_container_width=True)
+        st.dataframe(corr_df, use_container_width=True, hide_index=True)
         st.markdown("</div>", unsafe_allow_html=True)
-
     if metric_options and x_metric is not None and y_metric is not None:
         c3, c4 = st.columns(2)
         with c3:
@@ -972,7 +914,6 @@ with tab_charts:
     spec_row = active_specs_v1.loc[active_specs_v1["metric"] == selected_metric].iloc[0]
     rule_type = spec_row["rule_type"]
     spec_value = float(spec_row["spec_value"])
-
     c1, c2 = st.columns(2)
     with c1:
         st.markdown('<div class="panel-card">', unsafe_allow_html=True)
@@ -995,12 +936,10 @@ with tab_raw:
         st.markdown('<div class="panel-card">', unsafe_allow_html=True)
         st.dataframe(active_specs_v1, use_container_width=True, hide_index=True)
         st.markdown("</div>", unsafe_allow_html=True)
-
         st.markdown('<div class="section-title">Raw Data - MC_v1</div>', unsafe_allow_html=True)
         st.markdown('<div class="panel-card">', unsafe_allow_html=True)
         st.dataframe(v1.drop(columns=[c for c in ["corner", "temp_C", "vdd_V"] if c in v1.columns]), use_container_width=True, hide_index=True)
         st.markdown("</div>", unsafe_allow_html=True)
-
         st.markdown('<div class="section-title">Raw Data - MC_v2</div>', unsafe_allow_html=True)
         st.markdown('<div class="panel-card">', unsafe_allow_html=True)
         st.dataframe(v2.drop(columns=[c for c in ["corner", "temp_C", "vdd_V"] if c in v2.columns]), use_container_width=True, hide_index=True)
