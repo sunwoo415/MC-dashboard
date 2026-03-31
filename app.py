@@ -85,7 +85,7 @@ html, body, [class*="css"] { font-family: "Segoe UI", Arial, sans-serif; color: 
 section[data-testid="stSidebar"] { background:#fff9f5; border-right:1px solid #f1ddd1; }
 .sidebar-title { font-weight:800; color:var(--sk-red); margin-bottom:0.4rem; }
 hr.soft { border:none; border-top:1px solid #f1ddd1; margin:0.8rem 0 1rem 0; }
-.table-wrap { overflow-x:auto; border:1px solid var(--sk-border-soft); border-radius:14px; }
+.table-wrap { overflow-x:visible; border:1px solid var(--sk-border-soft); border-radius:14px; }
 .review-table { width:100%; border-collapse:separate; border-spacing:0; font-size:13px; }
 .review-table th {
     background:var(--header-bg); color:var(--header-text); padding:9px 10px;
@@ -568,38 +568,71 @@ with tabs[0]:
     with b: render_review_table(worst_degrade, "TOP DEGRADATIONS", True)
 
 with tabs[1]:
-    a,b = st.columns(2)
-    with a: render_review_table(overall_v1.drop(columns=[c for c in ["fixed_corner","fixed_temp_C","fixed_vdd_V"] if c in overall_v1.columns]), "VERSION 1")
-    with b: render_review_table(overall_v2.drop(columns=[c for c in ["fixed_corner","fixed_temp_C","fixed_vdd_V"] if c in overall_v2.columns]), "VERSION 2")
-    a,b = st.columns(2)
-    with a: render_review_table(summary_v1, "VERSION 1")
-    with b: render_review_table(summary_v2, "VERSION 2")
+    st.markdown('<div class="section-title">Overall Summary</div>', unsafe_allow_html=True)
+    render_review_table(overall_v1.drop(columns=[c for c in ["fixed_corner","fixed_temp_C","fixed_vdd_V"] if c in overall_v1.columns]), "VERSION 1")
+    render_review_table(overall_v2.drop(columns=[c for c in ["fixed_corner","fixed_temp_C","fixed_vdd_V"] if c in overall_v2.columns]), "VERSION 2")
+
+    st.markdown('<div class="section-title">Metric Summary - Core</div>', unsafe_allow_html=True)
+    summary_core_cols = ["version","metric","display_name","rule_type","spec_value","yield_pct","fail_count","mean_minus_spec"]
+    render_review_table(summary_v1[summary_core_cols], "VERSION 1 - CORE")
+    render_review_table(summary_v2[summary_core_cols], "VERSION 2 - CORE")
+
+    st.markdown('<div class="section-title">Metric Summary - Statistics</div>', unsafe_allow_html=True)
+    summary_stat_cols = ["version","metric","mean","sigma","min","max","pass_count","unit"]
+    render_review_table(summary_v1[summary_stat_cols], "VERSION 1 - STATS")
+    render_review_table(summary_v2[summary_stat_cols], "VERSION 2 - STATS")
 
 with tabs[2]:
+    st.markdown('<div class="section-title">Overall Compare</div>', unsafe_allow_html=True)
     render_review_table(overall_compare, "OVERALL COMPARE", True)
-    render_review_table(metric_compare_long, "METRIC COMPARE", True)
+
+    st.markdown('<div class="section-title">Metric Compare - Yield / Count</div>', unsafe_allow_html=True)
+    metric_compare_yield = metric_compare_long[metric_compare_long["statistic"].isin(["yield_pct","pass_count","fail_count"])]
+    render_review_table(metric_compare_yield, "METRIC COMPARE - YIELD", True)
+
+    st.markdown('<div class="section-title">Metric Compare - Mean / Margin</div>', unsafe_allow_html=True)
+    metric_compare_margin = metric_compare_long[metric_compare_long["statistic"].isin(["mean","mean_minus_spec","sigma"])]
+    render_review_table(metric_compare_margin, "METRIC COMPARE - MARGIN", True)
+
+    st.markdown('<div class="section-title">Metric Compare - Range</div>', unsafe_allow_html=True)
+    metric_compare_range = metric_compare_long[metric_compare_long["statistic"].isin(["min","max"])]
+    render_review_table(metric_compare_range, "METRIC COMPARE - RANGE", True)
 
 with tabs[3]:
-    st.markdown(f'<div class="note-box">Spec Sensitivity is now reorganized into review-friendly columns: current spec, base yield, yield if relaxed, relaxed delta, yield if tightened, tightened delta, and max shift. Current perturbation step: ±{sensitivity_step:.0f}%.</div>', unsafe_allow_html=True)
-    a,b = st.columns(2)
-    with a: render_review_table(sensitivity_v1, "VERSION 1", True)
-    with b: render_review_table(sensitivity_v2, "VERSION 2", True)
+    st.markdown(f'<div class="note-box">Spec Sensitivity is split into fully separate Relaxed and Tightened tables. Current perturbation step: ±{sensitivity_step:.0f}%.</div>', unsafe_allow_html=True)
+
+    relaxed_v1 = sensitivity_v1[["metric","display_name","current_spec","base_yield_pct","yield_if_relaxed","relaxed_delta","max_shift_pctp"]].copy()
+    relaxed_v2 = sensitivity_v2[["metric","display_name","current_spec","base_yield_pct","yield_if_relaxed","relaxed_delta","max_shift_pctp"]].copy()
+    tightened_v1 = sensitivity_v1[["metric","display_name","current_spec","base_yield_pct","yield_if_tightened","tightened_delta","max_shift_pctp"]].copy()
+    tightened_v2 = sensitivity_v2[["metric","display_name","current_spec","base_yield_pct","yield_if_tightened","tightened_delta","max_shift_pctp"]].copy()
+
+    st.markdown('<div class="section-title">Relaxed Spec View - VERSION 1</div>', unsafe_allow_html=True)
+    render_review_table(relaxed_v1, "VERSION 1 - RELAXED", True)
+
+    st.markdown('<div class="section-title">Relaxed Spec View - VERSION 2</div>', unsafe_allow_html=True)
+    render_review_table(relaxed_v2, "VERSION 2 - RELAXED", True)
+
+    st.markdown('<div class="section-title">Tightened Spec View - VERSION 1</div>', unsafe_allow_html=True)
+    render_review_table(tightened_v1, "VERSION 1 - TIGHTENED", True)
+
+    st.markdown('<div class="section-title">Tightened Spec View - VERSION 2</div>', unsafe_allow_html=True)
+    render_review_table(tightened_v2, "VERSION 2 - TIGHTENED", True)
 
 with tabs[4]:
-    a,b = st.columns(2)
-    with a: render_review_table(fail_rank_v1, "VERSION 1")
-    with b: render_review_table(fail_rank_v2, "VERSION 2")
-    a,b = st.columns(2)
-    with a: render_review_table(fail_decomp_v1, "VERSION 1")
-    with b: render_review_table(fail_decomp_v2, "VERSION 2")
+    st.markdown('<div class="section-title">Fail Ranking</div>', unsafe_allow_html=True)
+    render_review_table(fail_rank_v1, "VERSION 1")
+    render_review_table(fail_rank_v2, "VERSION 2")
+    st.markdown('<div class="section-title">Fail Decomposition</div>', unsafe_allow_html=True)
+    render_review_table(fail_decomp_v1, "VERSION 1")
+    render_review_table(fail_decomp_v2, "VERSION 2")
 
 with tabs[5]:
-    a,b = st.columns(2)
-    with a: render_review_table(near_fail_v1, "VERSION 1")
-    with b: render_review_table(near_fail_v2, "VERSION 2")
-    a,b = st.columns(2)
-    with a: render_review_table(worst_v1, "VERSION 1")
-    with b: render_review_table(worst_v2, "VERSION 2")
+    st.markdown('<div class="section-title">Near-Fail Samples</div>', unsafe_allow_html=True)
+    render_review_table(near_fail_v1, "VERSION 1")
+    render_review_table(near_fail_v2, "VERSION 2")
+    st.markdown('<div class="section-title">Worst Samples</div>', unsafe_allow_html=True)
+    render_review_table(worst_v1, "VERSION 1")
+    render_review_table(worst_v2, "VERSION 2")
 
 with tabs[6]:
     a,b = st.columns([1,2])
@@ -653,4 +686,3 @@ with tabs[8]:
         render_review_table(active_specs_v1, "ACTIVE SPECS")
         render_review_table(v1.drop(columns=[c for c in ["corner","temp_C","vdd_V"] if c in v1.columns]), "RAW DATA - MC_v1")
         render_review_table(v2.drop(columns=[c for c in ["corner","temp_C","vdd_V"] if c in v2.columns]), "RAW DATA - MC_v2")
-
