@@ -101,15 +101,189 @@ hr.soft { border:none; border-top:1px solid #f1ddd1; margin:0.8rem 0 1rem 0; }
 .review-table td.bad { background:var(--bad-bg); color:var(--bad-text); font-weight:700; text-align:right; }
 .review-table td.neutral { background:var(--neutral-bg); color:var(--neutral-text); font-weight:700; text-align:right; }
 .board-card {
-    background:white; border:1px solid #f2e3d9; border-left:5px solid var(--sk-orange); border-radius:16px;
-    padding:14px 16px; box-shadow:0 8px 20px rgba(17,24,39,0.045); margin-bottom:12px;
+    background: linear-gradient(180deg, #ffffff 0%, #fff7f1 100%);
+    border: 1px solid #f2d7c3;
+    border-left: 9px solid var(--sk-orange);
+    border-radius: 24px;
+    padding: 22px 22px;
+    box-shadow: 0 16px 34px rgba(17,24,39,0.08);
+    margin-bottom: 16px;
 }
-.board-title { font-weight:800; font-size:1rem; color:var(--sk-text); margin-bottom:6px; }
-.board-meta { color:var(--sk-muted); font-size:0.88rem; margin-bottom:10px; }
-.board-yield { display:flex; gap:10px; flex-wrap:wrap; }
+.board-title {
+    font-weight: 800;
+    font-size: 1.10rem;
+    color: var(--sk-text);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+}
+.board-meta {
+    color: var(--sk-muted);
+    font-size: 0.92rem;
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+.board-note {
+    color: var(--sk-text);
+    font-size: 0.93rem;
+    line-height: 1.55;
+    background: rgba(255,255,255,0.88);
+    border: 1px solid #f3e4d8;
+    border-radius: 14px;
+    padding: 10px 12px;
+    margin-top: 10px;
+}
+.board-yield {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
 .board-pill {
-    display:inline-block; padding:4px 10px; border-radius:999px; background:#fff7f1; color:#7c4a35;
-    border:1px solid #f2d3c2; font-size:0.82rem; font-weight:700;
+    display: inline-block;
+    padding: 7px 12px;
+    border-radius: 999px;
+    background: #fff1e6;
+    color: #8b3a10;
+    border: 1px solid #efc2a4;
+    font-size: 0.83rem;
+    font-weight: 800;
+}
+.board-load-btn button {
+    min-height: 148px !important;
+    text-align: left !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    white-space: pre-wrap !important;
+    line-height: 1.55 !important;
+    border-radius: 24px !important;
+    border: 1px solid #f2d7c3 !important;
+    border-left: 9px solid var(--sk-orange) !important;
+    background: linear-gradient(180deg, #ffffff 0%, #fff7f1 100%) !important;
+    color: var(--sk-text) !important;
+    box-shadow: 0 16px 34px rgba(17,24,39,0.08) !important;
+    padding: 16px 18px !important;
+    font-weight: 650 !important;
+}
+.board-load-btn button:hover {
+    border-color: #efb28d !important;
+    box-shadow: 0 18px 38px rgba(234,91,12,0.14) !important;
+    transform: translateY(-1px);
+}
+.board-delete-btn button {
+    min-height: 168px !important;
+    border-radius: 20px !important;
+    border: 1px solid #f1c5c3 !important;
+    background: linear-gradient(180deg, #fff7f7 0%, #fff0f0 100%) !important;
+    color: #b42318 !important;
+    font-weight: 800 !important;
+    font-size: 1.12rem !important;
+}
+
+.board-link {
+    display:block;
+    text-decoration:none !important;
+}
+.board-link-card {
+    background: linear-gradient(180deg, #ffffff 0%, #fff7f1 100%);
+    border: 1px solid #f2d7c3;
+    border-left: 9px solid var(--sk-orange);
+    border-radius: 24px;
+    padding: 22px 22px;
+    box-shadow: 0 16px 34px rgba(17,24,39,0.08);
+    margin-bottom: 16px;
+    transition: all 0.15s ease;
+}
+.board-link-card:hover {
+    border-color: #efb28d;
+    box-shadow: 0 18px 38px rgba(234,91,12,0.14);
+    transform: translateY(-1px);
+}
+.board-link-title {
+    font-weight: 800;
+    font-size: 1.10rem;
+    color: var(--sk-text);
+    margin-bottom: 10px;
+    letter-spacing: -0.01em;
+}
+.board-link-meta {
+    color: var(--sk-muted);
+    font-size: 0.92rem;
+    margin-bottom: 8px;
+    line-height: 1.5;
+}
+.board-link-note {
+    color: var(--sk-text);
+    font-size: 0.93rem;
+    line-height: 1.55;
+    background: rgba(255,255,255,0.88);
+    border: 1px solid #f3e4d8;
+    border-radius: 14px;
+    padding: 10px 12px;
+    margin-top: 10px;
+}
+.board-link-pills {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+}
+.board-link-pill {
+    display: inline-block;
+    padding: 7px 12px;
+    border-radius: 999px;
+    background: #fff1e6;
+    color: #8b3a10;
+    border: 1px solid #efc2a4;
+    font-size: 0.83rem;
+    font-weight: 800;
+}
+.board-delete-link {
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    min-height:168px;
+    text-decoration:none !important;
+    border-radius:20px;
+    border:1px solid #f1c5c3;
+    background: linear-gradient(180deg, #fff7f7 0%, #fff0f0 100%);
+    color:#b42318 !important;
+    font-weight:800;
+    font-size:1.12rem;
+}
+
+
+/* Marker-based styling so Streamlit buttons match the old v32 HTML cards */
+.element-container:has(.board-load-btn-marker) + div button {
+    min-height: 148px !important;
+    text-align: left !important;
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
+    white-space: pre-wrap !important;
+    line-height: 1.46 !important;
+    border-radius: 24px !important;
+    border: 1px solid #f2d7c3 !important;
+    border-left: 9px solid var(--sk-orange) !important;
+    background: linear-gradient(180deg, #ffffff 0%, #fff7f1 100%) !important;
+    color: var(--sk-text) !important;
+    box-shadow: 0 16px 34px rgba(17,24,39,0.08) !important;
+    padding: 16px 18px !important;
+    font-weight: 620 !important;
+    font-size: 0.91rem !important;
+}
+.element-container:has(.board-load-btn-marker) + div button:hover {
+    border-color: #efb28d !important;
+    box-shadow: 0 18px 38px rgba(234,91,12,0.14) !important;
+    transform: translateY(-1px);
+}
+.element-container:has(.board-delete-btn-marker) + div button {
+    min-height: 168px !important;
+    border-radius: 20px !important;
+    border: 1px solid #f1c5c3 !important;
+    background: linear-gradient(180deg, #fff7f7 0%, #fff0f0 100%) !important;
+    color: #b42318 !important;
+    font-weight: 800 !important;
+    font-size: 1.12rem !important;
+    box-shadow: 0 12px 24px rgba(180,35,24,0.08) !important;
 }
 </style>
 """
@@ -207,6 +381,13 @@ def load_review_from_db(review_id):
     row["v2_df"] = pd.read_json(row["v2_json"]) if row.get("v2_json") else None
     return row
 
+def delete_review_from_db(review_id):
+    conn = get_conn()
+    cur = conn.cursor()
+    cur.execute("DELETE FROM reviews WHERE review_id = ?", (review_id,))
+    conn.commit()
+    conn.close()
+
 # ---------------- utils ----------------
 def fmt_value(col, val):
     if pd.isna(val):
@@ -221,6 +402,16 @@ def fmt_value(col, val):
             return f"{float(val):.1f}"
         return f"{float(val):.2f}"
     return str(val)
+
+def html_escape(val):
+    return (
+        str(val)
+        .replace("&", "&amp;")
+        .replace("<", "&lt;")
+        .replace(">", "&gt;")
+        .replace('"', "&quot;")
+        .replace("\'", "&#39;")
+    )
 
 def render_metric_card(label, value, note="", decimals=2):
     num = f"{float(value):.{decimals}f}" if isinstance(value, (int, float)) else str(value)
@@ -517,6 +708,48 @@ def plot_cdf(v1, v2, metric, rule_type, spec_value):
     fig.tight_layout()
     return fig
 
+
+
+def get_numeric_metric_df(detail, active_specs):
+    metric_cols = [m for m in active_specs["metric"].tolist() if m in detail.columns]
+    if not metric_cols:
+        return pd.DataFrame()
+    return detail[metric_cols].copy()
+
+def plot_tradeoff_scatter(detail, x_metric, y_metric):
+    fig, ax = plt.subplots(figsize=(7, 5))
+    pass_mask = detail["overall_pass"] if "overall_pass" in detail.columns else pd.Series([True] * len(detail), index=detail.index)
+    fail_mask = ~pass_mask
+    if pass_mask.any():
+        ax.scatter(detail.loc[pass_mask, x_metric], detail.loc[pass_mask, y_metric], alpha=0.55, label="pass")
+    if fail_mask.any():
+        ax.scatter(detail.loc[fail_mask, x_metric], detail.loc[fail_mask, y_metric], alpha=0.85, label="fail")
+    ax.set_xlabel(x_metric)
+    ax.set_ylabel(y_metric)
+    ax.set_title(f"Tradeoff Scatter: {y_metric} vs {x_metric}")
+    ax.legend()
+    fig.tight_layout()
+    return fig
+
+def plot_correlation_heatmap(corr_df, title):
+    fig, ax = plt.subplots(figsize=(7, 6))
+    if corr_df.empty:
+        ax.text(0.5, 0.5, "No numeric metrics available", ha="center", va="center")
+        ax.set_axis_off()
+        return fig
+    im = ax.imshow(corr_df.values, aspect="auto")
+    ax.set_xticks(range(len(corr_df.columns)))
+    ax.set_xticklabels(corr_df.columns, rotation=45, ha="right")
+    ax.set_yticks(range(len(corr_df.index)))
+    ax.set_yticklabels(corr_df.index)
+    ax.set_title(title)
+    for i in range(len(corr_df.index)):
+        for j in range(len(corr_df.columns)):
+            ax.text(j, i, f"{corr_df.iloc[i, j]:.2f}", ha="center", va="center", fontsize=9)
+    fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
+    fig.tight_layout()
+    return fig
+
 # ---------------- state init ----------------
 init_db()
 DEFAULT_META = {"project_name": "MC Review Project", "design_version": "v1", "reviewer": "", "review_note": ""}
@@ -529,12 +762,16 @@ for k, default in {
     "loaded_comments_json": None,
     "loaded_v1_json": None,
     "loaded_v2_json": None,
+    "pending_main_view": None,
     "editor_nonce": 0,
 }.items():
     if k not in st.session_state:
         st.session_state[k] = default
 
+
 # ---------------- header ----------------
+review_ready = False
+
 st.markdown("""
 <div class="app-hero">
     <div class="logo-badge"><span class="logo-dot"></span>SK hynix-style review UI</div>
@@ -555,42 +792,74 @@ with st.sidebar:
     sensitivity_step = st.slider("Spec sensitivity step (%)", min_value=1.0, max_value=10.0, value=2.0, step=1.0)
     show_raw = st.checkbox("Show raw data tables", value=False)
     st.markdown('<hr class="soft" />', unsafe_allow_html=True)
-    st.markdown("**Saved reviews**")
-    saved_reviews_df = list_saved_reviews()
-    options = ["(none)"]
-    if not saved_reviews_df.empty:
-        options += [f"{int(r.review_id)} | {r.project_name} | {r.design_version} | {r.saved_at}" for _, r in saved_reviews_df.iterrows()]
-    selected_saved = st.selectbox("Load saved review", options=options)
-    load_clicked = st.button("Load selected review into current session")
+    st.markdown("**Database save**")
+    save_button_placeholder = st.empty()
 
 # apply load before widgets and before any upload gating
-if load_clicked and selected_saved != "(none)":
-    rid = int(selected_saved.split("|")[0].strip())
-    loaded_review = load_review_from_db(rid)
-    if loaded_review is not None:
-        st.session_state.loaded_review_id = rid
-        st.session_state.project_name = loaded_review["project_name"] or DEFAULT_META["project_name"]
-        st.session_state.design_version = loaded_review["design_version"] or DEFAULT_META["design_version"]
-        st.session_state.reviewer = loaded_review["reviewer"] or DEFAULT_META["reviewer"]
-        st.session_state.review_note = loaded_review["review_note"] or DEFAULT_META["review_note"]
-        st.session_state.loaded_specs_json = loaded_review["specs_json"]
-        st.session_state.loaded_comments_json = loaded_review["comments_json"]
-        st.session_state.loaded_v1_json = loaded_review["v1_json"]
-        st.session_state.loaded_v2_json = loaded_review["v2_json"]
-        st.session_state.editor_nonce += 1
-        st.rerun()
 
 # ---------------- always-visible saved board ----------------
 board_df = list_saved_reviews()
-board_tab, analysis_tab = st.tabs(["Saved Reviews Board", "Current Review / Analysis"])
+review_ready = False
+if st.session_state.pending_main_view is not None:
+    st.session_state.main_view = st.session_state.pending_main_view
+    st.session_state.pending_main_view = None
+main_view = st.radio("Main view", ["Saved Reviews Board", "Current Review / Analysis"], horizontal=True, key="main_view", label_visibility="collapsed")
 
-with board_tab:
+if main_view == "Saved Reviews Board":
     st.markdown('<div class="section-title">Saved Reviews Board</div>', unsafe_allow_html=True)
-    render_board(board_df)
-    if not board_df.empty:
-        render_review_table(board_df[["review_id","saved_at","project_name","design_version","reviewer","overall_v1_yield","overall_v2_yield","source_filename"]], "SAVED REVIEWS TABLE")
+    if board_df is None or board_df.empty:
+        st.markdown('<div class="note-box">No saved reviews yet.</div>', unsafe_allow_html=True)
+    else:
+        for _, row in board_df.iterrows():
+            rid = int(row["review_id"])
+            note = row["review_note"] if isinstance(row["review_note"], str) and row["review_note"].strip() else "(no note)"
+            source = row["source_filename"] if isinstance(row["source_filename"], str) and row["source_filename"].strip() else "-"
+            card_col, x_col = st.columns([26, 1])
+            with card_col:
+                st.markdown('<div class="board-load-btn-marker"></div>', unsafe_allow_html=True)
+                display_note = note.replace("\n", " ")
+                if len(display_note) > 80:
+                    display_note = display_note[:80] + "..."
+                label = (
+                    f"#{rid}  {row['project_name']}  ·  {row['design_version']}\n"
+                    f"Saved {row['saved_at']}   |   Reviewer {row['reviewer'] if row['reviewer'] else '-'}   |   Source {source}\n"
+                    f"Yield   v1 {fmt_value('overall_v1_yield', row['overall_v1_yield'])}   /   v2 {fmt_value('overall_v2_yield', row['overall_v2_yield'])}\n"
+                    f"Note    {display_note}"
+                )
+                if st.button(label, key=f"board_card_load_{rid}", use_container_width=True):
+                    loaded_review = load_review_from_db(rid)
+                    if loaded_review is not None:
+                        st.session_state.loaded_review_id = rid
+                        st.session_state.project_name = loaded_review["project_name"] or DEFAULT_META["project_name"]
+                        st.session_state.design_version = loaded_review["design_version"] or DEFAULT_META["design_version"]
+                        st.session_state.reviewer = loaded_review["reviewer"] or DEFAULT_META["reviewer"]
+                        st.session_state.review_note = loaded_review["review_note"] or DEFAULT_META["review_note"]
+                        st.session_state.loaded_specs_json = loaded_review["specs_json"]
+                        st.session_state.loaded_comments_json = loaded_review["comments_json"]
+                        st.session_state.loaded_v1_json = loaded_review["v1_json"]
+                        st.session_state.loaded_v2_json = loaded_review["v2_json"]
+                        st.session_state.editor_nonce += 1
+                        st.session_state.pending_main_view = "Current Review / Analysis"
+                        st.rerun()
+            with x_col:
+                st.markdown('<div class="board-delete-btn-marker"></div>', unsafe_allow_html=True)
+                if st.button("✕", key=f"board_card_delete_{rid}", use_container_width=True, help=f"Delete review #{rid}"):
+                    delete_review_from_db(rid)
+                    if st.session_state.loaded_review_id == rid:
+                        st.session_state.loaded_review_id = None
+                        st.session_state.loaded_specs_json = None
+                        st.session_state.loaded_comments_json = None
+                        st.session_state.loaded_v1_json = None
+                        st.session_state.loaded_v2_json = None
+                    st.session_state.pending_main_view = "Saved Reviews Board"
+                    st.rerun()
 
-with analysis_tab:
+        render_review_table(
+            board_df[["review_id","saved_at","project_name","design_version","reviewer","overall_v1_yield","overall_v2_yield","source_filename"]],
+            "SAVED REVIEWS TABLE"
+        )
+
+if main_view == "Current Review / Analysis":
     # determine data source: uploaded file first, else loaded db raw data
     specs_from_file = None
     source_filename = ""
@@ -598,7 +867,7 @@ with analysis_tab:
         try:
             specs_from_file, v1, v2 = load_workbook(uploaded_file)
             source_filename = uploaded_file.name if hasattr(uploaded_file, "name") else ""
-            # when user uploads new excel, uploaded data becomes current active analysis source
+            review_ready = True
         except Exception as e:
             st.error(f"Failed to read workbook: {e}")
             st.stop()
@@ -606,171 +875,147 @@ with analysis_tab:
         v1 = pd.read_json(st.session_state.loaded_v1_json)
         v2 = pd.read_json(st.session_state.loaded_v2_json)
         source_filename = "loaded_from_db"
+        review_ready = True
     else:
-        st.info("Upload an Excel workbook, or load a saved review from the left sidebar.")
-        st.stop()
+        review_ready = False
+        with st.sidebar:
+            sidebar_save_clicked = save_button_placeholder.button("Save current review to DB", disabled=True, use_container_width=True, key="sidebar_save_db_top")
+        st.info("Upload an Excel workbook, or load a saved review from the Saved Reviews Board tab.")
 
-    # metadata
-    st.markdown('<div class="section-title">Review Metadata</div>', unsafe_allow_html=True)
-    meta_col1, meta_col2 = st.columns(2)
-    with meta_col1:
-        project_name = st.text_input("Project name", key="project_name")
-        design_version = st.text_input("Design version", key="design_version")
-    with meta_col2:
-        reviewer = st.text_input("Reviewer", key="reviewer")
-        review_note = st.text_area("Review note", key="review_note", height=100)
+    if review_ready:
+        # metadata
+        st.markdown('<div class="section-title">Review Metadata</div>', unsafe_allow_html=True)
+        meta_col1, meta_col2 = st.columns(2)
+        with meta_col1:
+            project_name = st.text_input("Project name", key="project_name")
+            design_version = st.text_input("Design version", key="design_version")
+        with meta_col2:
+            reviewer = st.text_input("Reviewer", key="reviewer")
+            review_note = st.text_area("Review note", key="review_note", height=100)
 
-    # specs
-    specs_base = normalize_specs(specs_from_file, v1, v2)
-    if st.session_state.loaded_specs_json:
-        specs_base = pd.read_json(st.session_state.loaded_specs_json).copy()
-        if "enabled" in specs_base.columns:
-            specs_base["enabled"] = specs_base["enabled"].astype(str).str.upper()
+        # specs
+        specs_base = normalize_specs(specs_from_file, v1, v2)
+        if st.session_state.loaded_specs_json:
+            specs_base = pd.read_json(st.session_state.loaded_specs_json).copy()
+            if "enabled" in specs_base.columns:
+                specs_base["enabled"] = specs_base["enabled"].astype(str).str.upper()
 
-    st.markdown('<div class="section-title">Spec Settings</div>', unsafe_allow_html=True)
-    st.markdown('<div class="panel-card">', unsafe_allow_html=True)
-    spec_editor = specs_base.copy()
-    spec_editor["enabled"] = spec_editor["enabled"].astype(str).str.upper().map(lambda x: True if x == "Y" else False)
-    edited_specs = st.data_editor(
-        spec_editor,
-        num_rows="dynamic",
-        use_container_width=True,
-        hide_index=True,
-        key=f"spec_editor_db_{st.session_state.editor_nonce}",
-    )
-    st.markdown("</div>", unsafe_allow_html=True)
-    edited_specs = edited_specs.copy()
-    edited_specs["enabled"] = edited_specs["enabled"].map(lambda x: "Y" if bool(x) else "N")
-
-    try:
-        active_specs_v1, summary_v1, overall_v1, detail_v1 = summarize_version(v1, edited_specs, "v1")
-        active_specs_v2, summary_v2, overall_v2, detail_v2 = summarize_version(v2, edited_specs, "v2")
-    except Exception as e:
-        st.error(f"Spec processing failed: {e}")
-        st.stop()
-
-    metric_compare = compare_versions(summary_v1, summary_v2)
-    fail_rank_v1 = build_fail_ranking(detail_v1, active_specs_v1, "v1")
-    fail_rank_v2 = build_fail_ranking(detail_v2, active_specs_v2, "v2")
-    near_fail_v1 = build_near_fail_samples(detail_v1, active_specs_v1, "v1", n=top_n)
-    near_fail_v2 = build_near_fail_samples(detail_v2, active_specs_v2, "v2", n=top_n)
-    sensitivity_v1 = build_spec_sensitivity(detail_v1, edited_specs, sensitivity_step)
-    sensitivity_v2 = build_spec_sensitivity(detail_v2, edited_specs, sensitivity_step)
-    summary_lines = build_summary_insights(overall_v1, overall_v2, fail_rank_v1, fail_rank_v2, near_fail_v1, near_fail_v2, metric_compare)
-
-    # comments
-    comment_base = pd.DataFrame({
-        "metric": active_specs_v1["metric"].tolist(),
-        "status": ["open"] * len(active_specs_v1),
-        "owner": [""] * len(active_specs_v1),
-        "comment": [""] * len(active_specs_v1),
-    })
-    if st.session_state.loaded_comments_json:
-        loaded_comments = pd.read_json(st.session_state.loaded_comments_json).copy()
-        if not loaded_comments.empty:
-            comment_base = comment_base.drop(columns=["status", "owner", "comment"]).merge(loaded_comments, on="metric", how="left")
-            comment_base["status"] = comment_base["status"].fillna("open")
-            comment_base["owner"] = comment_base["owner"].fillna("")
-            comment_base["comment"] = comment_base["comment"].fillna("")
-
-    tabs = st.tabs(["Executive Summary", "Summary", "Compare", "Spec Sensitivity", "Comments / Actions", "Charts", "Raw Data"])
-
-    with tabs[0]:
-        items = "".join([f"<li>{line}</li>" for line in summary_lines])
-        st.markdown(f'<div class="summary-box"><div class="summary-title">Key findings</div><ul class="summary-list">{items}</ul></div>', unsafe_allow_html=True)
-        a, b, c = st.columns(3)
-        with a:
-            render_metric_card("v1 overall yield (%)", overall_v1.iloc[0]["overall_yield_pct"], "Current enabled-spec result.", 1)
-        with b:
-            render_metric_card("v2 overall yield (%)", overall_v2.iloc[0]["overall_yield_pct"], "Current enabled-spec result.", 1)
-        with c:
-            render_metric_card("Yield delta (v2-v1)", overall_v2.iloc[0]["overall_yield_pct"] - overall_v1.iloc[0]["overall_yield_pct"], "Positive means v2 improved.", 1)
-
-    with tabs[1]:
-        render_review_table(overall_v1, "VERSION 1")
-        render_review_table(overall_v2, "VERSION 2")
-        core_cols = ["version", "metric", "display_name", "rule_type", "spec_value", "yield_pct", "fail_count", "mean_minus_spec"]
-        render_review_table(summary_v1[core_cols], "VERSION 1 - CORE")
-        render_review_table(summary_v2[core_cols], "VERSION 2 - CORE")
-
-    with tabs[2]:
-        overall_compare = pd.DataFrame([
-            {"field":"total_runs","version_1":overall_v1.iloc[0]["total_runs"],"version_2":overall_v2.iloc[0]["total_runs"],"delta":overall_v2.iloc[0]["total_runs"]-overall_v1.iloc[0]["total_runs"]},
-            {"field":"overall_pass_count","version_1":overall_v1.iloc[0]["overall_pass_count"],"version_2":overall_v2.iloc[0]["overall_pass_count"],"delta":overall_v2.iloc[0]["overall_pass_count"]-overall_v1.iloc[0]["overall_pass_count"]},
-            {"field":"overall_fail_count","version_1":overall_v1.iloc[0]["overall_fail_count"],"version_2":overall_v2.iloc[0]["overall_fail_count"],"delta":overall_v2.iloc[0]["overall_fail_count"]-overall_v1.iloc[0]["overall_fail_count"]},
-            {"field":"overall_yield_pct","version_1":overall_v1.iloc[0]["overall_yield_pct"],"version_2":overall_v2.iloc[0]["overall_yield_pct"],"delta":overall_v2.iloc[0]["overall_yield_pct"]-overall_v1.iloc[0]["overall_yield_pct"]},
-        ])
-        render_review_table(overall_compare, "OVERALL COMPARE", True)
-        metric_compare_yield = metric_compare[["metric", "display_name", "yield_pct_v1", "yield_pct_v2", "yield_pct_delta_v2_minus_v1", "fail_count_v1", "fail_count_v2", "fail_count_delta_v2_minus_v1"]].copy()
-        metric_compare_yield = metric_compare_yield.rename(columns={
-            "yield_pct_v1":"v1_yield_pct","yield_pct_v2":"v2_yield_pct","yield_pct_delta_v2_minus_v1":"yield_delta",
-            "fail_count_v1":"v1_fail_count","fail_count_v2":"v2_fail_count","fail_count_delta_v2_minus_v1":"fail_count_delta"
-        })
-        render_review_table(metric_compare_yield, "METRIC COMPARE - YIELD / FAIL", True)
-
-    with tabs[3]:
-        st.markdown(f'<div class="note-box">Current perturbation step: ±{sensitivity_step:.0f}%.</div>', unsafe_allow_html=True)
-        relaxed_v1 = sensitivity_v1[["metric","display_name","current_spec","base_yield_pct","yield_if_relaxed","relaxed_delta","max_shift_pctp"]]
-        relaxed_v2 = sensitivity_v2[["metric","display_name","current_spec","base_yield_pct","yield_if_relaxed","relaxed_delta","max_shift_pctp"]]
-        tightened_v1 = sensitivity_v1[["metric","display_name","current_spec","base_yield_pct","yield_if_tightened","tightened_delta","max_shift_pctp"]]
-        tightened_v2 = sensitivity_v2[["metric","display_name","current_spec","base_yield_pct","yield_if_tightened","tightened_delta","max_shift_pctp"]]
-        render_review_table(relaxed_v1, "VERSION 1 - RELAXED", True)
-        render_review_table(relaxed_v2, "VERSION 2 - RELAXED", True)
-        render_review_table(tightened_v1, "VERSION 1 - TIGHTENED", True)
-        render_review_table(tightened_v2, "VERSION 2 - TIGHTENED", True)
-
-    with tabs[4]:
-        comments_df = st.data_editor(
-            comment_base,
-            num_rows="fixed",
+        st.markdown('<div class="section-title">Spec Settings</div>', unsafe_allow_html=True)
+        st.markdown('<div class="panel-card">', unsafe_allow_html=True)
+        spec_editor = specs_base.copy()
+        spec_editor["enabled"] = spec_editor["enabled"].astype(str).str.upper().map(lambda x: True if x == "Y" else False)
+        edited_specs = st.data_editor(
+            spec_editor,
+            num_rows="dynamic",
             use_container_width=True,
             hide_index=True,
-            column_config={
-                "status": st.column_config.SelectboxColumn("status", options=["open", "watch", "resolved"]),
-                "owner": st.column_config.TextColumn("owner"),
-                "comment": st.column_config.TextColumn("comment"),
-            },
-            key=f"comments_editor_db_{st.session_state.editor_nonce}",
+            key=f"spec_editor_db_{st.session_state.editor_nonce}",
         )
-        render_review_table(comments_df, "CURRENT ACTION ITEMS")
+        st.markdown("</div>", unsafe_allow_html=True)
+        edited_specs = edited_specs.copy()
+        edited_specs["enabled"] = edited_specs["enabled"].map(lambda x: "Y" if bool(x) else "N")
 
-    with tabs[5]:
-        metric_options = active_specs_v1["metric"].tolist()
-        selected_metric = st.selectbox("Select metric", metric_options)
-        spec_row = active_specs_v1.loc[active_specs_v1["metric"] == selected_metric].iloc[0]
-        rule_type = spec_row["rule_type"]
-        spec_value = float(spec_row["spec_value"])
-        a, b = st.columns(2)
-        with a:
-            st.markdown('<div class="panel-card"><div class="small-tag">Histogram</div>', unsafe_allow_html=True)
-            fig = plot_histogram(v1, v2, selected_metric, rule_type, spec_value)
-            st.pyplot(fig)
-            plt.close(fig)
-            st.markdown("</div>", unsafe_allow_html=True)
-        with b:
-            st.markdown('<div class="panel-card"><div class="small-tag">CDF</div>', unsafe_allow_html=True)
-            fig = plot_cdf(v1, v2, selected_metric, rule_type, spec_value)
-            st.pyplot(fig)
-            plt.close(fig)
-            st.markdown("</div>", unsafe_allow_html=True)
+        try:
+            active_specs_v1, summary_v1, overall_v1, detail_v1 = summarize_version(v1, edited_specs, "v1")
+            active_specs_v2, summary_v2, overall_v2, detail_v2 = summarize_version(v2, edited_specs, "v2")
+        except Exception as e:
+            st.error(f"Spec processing failed: {e}")
+            st.stop()
 
-    with tabs[6]:
-        if not show_raw:
-            st.info("Enable 'Show raw data tables' from the sidebar to view raw tables here.")
-        else:
-            render_review_table(edited_specs, "ACTIVE SPECS")
-            render_review_table(v1, "RAW DATA - MC_v1")
-            render_review_table(v2, "RAW DATA - MC_v2")
+        metric_compare = compare_versions(summary_v1, summary_v2)
+        fail_rank_v1 = build_fail_ranking(detail_v1, active_specs_v1, "v1")
+        fail_rank_v2 = build_fail_ranking(detail_v2, active_specs_v2, "v2")
+        near_fail_v1 = build_near_fail_samples(detail_v1, active_specs_v1, "v1", n=top_n)
+        near_fail_v2 = build_near_fail_samples(detail_v2, active_specs_v2, "v2", n=top_n)
+        sensitivity_v1 = build_spec_sensitivity(detail_v1, edited_specs, sensitivity_step)
+        sensitivity_v2 = build_spec_sensitivity(detail_v2, edited_specs, sensitivity_step)
+        summary_lines = build_summary_insights(overall_v1, overall_v2, fail_rank_v1, fail_rank_v2, near_fail_v1, near_fail_v2, metric_compare)
 
-    with st.sidebar:
-        st.markdown('<hr class="soft" />', unsafe_allow_html=True)
-        st.markdown("**Database save**")
-        if st.button("Save current review to DB"):
+        # comments
+        comment_base = pd.DataFrame({
+            "metric": active_specs_v1["metric"].tolist(),
+            "status": ["open"] * len(active_specs_v1),
+            "owner": [""] * len(active_specs_v1),
+            "comment": [""] * len(active_specs_v1),
+        })
+        if st.session_state.loaded_comments_json:
+            loaded_comments = pd.read_json(st.session_state.loaded_comments_json).copy()
+            if not loaded_comments.empty:
+                comment_base = comment_base.drop(columns=["status", "owner", "comment"]).merge(loaded_comments, on="metric", how="left")
+                comment_base["status"] = comment_base["status"].fillna("open")
+                comment_base["owner"] = comment_base["owner"].fillna("")
+                comment_base["comment"] = comment_base["comment"].fillna("")
+
+        tabs = st.tabs(["Executive Summary", "Summary", "Compare", "Spec Sensitivity", "Comments / Actions", "Correlation / Tradeoff", "Charts", "Raw Data"])
+
+        with tabs[0]:
+            items = "".join([f"<li>{line}</li>" for line in summary_lines])
+            st.markdown(f'<div class="summary-box"><div class="summary-title">Key findings</div><ul class="summary-list">{items}</ul></div>', unsafe_allow_html=True)
+            a, b, c = st.columns(3)
+            with a:
+                render_metric_card("v1 overall yield (%)", overall_v1.iloc[0]["overall_yield_pct"], "Current enabled-spec result.", 1)
+            with b:
+                render_metric_card("v2 overall yield (%)", overall_v2.iloc[0]["overall_yield_pct"], "Current enabled-spec result.", 1)
+            with c:
+                render_metric_card("Yield delta (v2-v1)", overall_v2.iloc[0]["overall_yield_pct"] - overall_v1.iloc[0]["overall_yield_pct"], "Positive means v2 improved.", 1)
+
+        with tabs[1]:
+            render_review_table(overall_v1, "VERSION 1")
+            render_review_table(overall_v2, "VERSION 2")
+            core_cols = ["version", "metric", "display_name", "rule_type", "spec_value", "yield_pct", "fail_count", "mean_minus_spec"]
+            render_review_table(summary_v1[core_cols], "VERSION 1 - CORE")
+            render_review_table(summary_v2[core_cols], "VERSION 2 - CORE")
+
+        with tabs[2]:
+            overall_compare = pd.DataFrame([
+                {"field":"total_runs","version_1":overall_v1.iloc[0]["total_runs"],"version_2":overall_v2.iloc[0]["total_runs"],"delta":overall_v2.iloc[0]["total_runs"]-overall_v1.iloc[0]["total_runs"]},
+                {"field":"overall_pass_count","version_1":overall_v1.iloc[0]["overall_pass_count"],"version_2":overall_v2.iloc[0]["overall_pass_count"],"delta":overall_v2.iloc[0]["overall_pass_count"]-overall_v1.iloc[0]["overall_pass_count"]},
+                {"field":"overall_fail_count","version_1":overall_v1.iloc[0]["overall_fail_count"],"version_2":overall_v2.iloc[0]["overall_fail_count"],"delta":overall_v2.iloc[0]["overall_fail_count"]-overall_v1.iloc[0]["overall_fail_count"]},
+                {"field":"overall_yield_pct","version_1":overall_v1.iloc[0]["overall_yield_pct"],"version_2":overall_v2.iloc[0]["overall_yield_pct"],"delta":overall_v2.iloc[0]["overall_yield_pct"]-overall_v1.iloc[0]["overall_yield_pct"]},
+            ])
+            render_review_table(overall_compare, "OVERALL COMPARE", True)
+            metric_compare_yield = metric_compare[["metric", "display_name", "yield_pct_v1", "yield_pct_v2", "yield_pct_delta_v2_minus_v1", "fail_count_v1", "fail_count_v2", "fail_count_delta_v2_minus_v1"]].copy()
+            metric_compare_yield = metric_compare_yield.rename(columns={
+                "yield_pct_v1":"v1_yield_pct","yield_pct_v2":"v2_yield_pct","yield_pct_delta_v2_minus_v1":"yield_delta",
+                "fail_count_v1":"v1_fail_count","fail_count_v2":"v2_fail_count","fail_count_delta_v2_minus_v1":"fail_count_delta"
+            })
+            render_review_table(metric_compare_yield, "METRIC COMPARE - YIELD / FAIL", True)
+
+        with tabs[3]:
+            st.markdown(f'<div class="note-box">Current perturbation step: ±{sensitivity_step:.0f}%.</div>', unsafe_allow_html=True)
+            relaxed_v1 = sensitivity_v1[["metric","display_name","current_spec","base_yield_pct","yield_if_relaxed","relaxed_delta","max_shift_pctp"]]
+            relaxed_v2 = sensitivity_v2[["metric","display_name","current_spec","base_yield_pct","yield_if_relaxed","relaxed_delta","max_shift_pctp"]]
+            tightened_v1 = sensitivity_v1[["metric","display_name","current_spec","base_yield_pct","yield_if_tightened","tightened_delta","max_shift_pctp"]]
+            tightened_v2 = sensitivity_v2[["metric","display_name","current_spec","base_yield_pct","yield_if_tightened","tightened_delta","max_shift_pctp"]]
+            render_review_table(relaxed_v1, "VERSION 1 - RELAXED", True)
+            render_review_table(relaxed_v2, "VERSION 2 - RELAXED", True)
+            render_review_table(tightened_v1, "VERSION 1 - TIGHTENED", True)
+            render_review_table(tightened_v2, "VERSION 2 - TIGHTENED", True)
+
+        with tabs[4]:
+            comments_df = st.data_editor(
+                comment_base,
+                num_rows="fixed",
+                use_container_width=True,
+                hide_index=True,
+                column_config={
+                    "status": st.column_config.SelectboxColumn("status", options=["open", "watch", "resolved"]),
+                    "owner": st.column_config.TextColumn("owner"),
+                    "comment": st.column_config.TextColumn("comment"),
+                },
+                key=f"comments_editor_db_{st.session_state.editor_nonce}",
+            )
+            render_review_table(comments_df, "CURRENT ACTION ITEMS")
+
+        with st.sidebar:
+            sidebar_save_clicked = save_button_placeholder.button("Save current review to DB", disabled=not review_ready, use_container_width=True, key="sidebar_save_db_top")
+
+        if sidebar_save_clicked:
             rid = save_review_to_db(
-                project_name=project_name,
-                design_version=design_version,
-                reviewer=reviewer,
-                review_note=review_note,
+                project_name=str(st.session_state.get("project_name", "")),
+                design_version=str(st.session_state.get("design_version", "")),
+                reviewer=str(st.session_state.get("reviewer", "")),
+                review_note=str(st.session_state.get("review_note", "")),
                 specs_df=edited_specs,
                 comments_df=comments_df,
                 overall_v1_yield=overall_v1.iloc[0]["overall_yield_pct"],
@@ -784,6 +1029,68 @@ with analysis_tab:
             st.session_state.loaded_comments_json = comments_df.to_json(orient="records")
             st.session_state.loaded_v1_json = v1.to_json(orient="records")
             st.session_state.loaded_v2_json = v2.to_json(orient="records")
-            st.success(f"Saved review #{rid} to database.")
-        st.caption(f"DB file: {DB_PATH}")
-        st.caption(f"Saved reviews: {len(list_saved_reviews())}")
+            st.session_state.pending_main_view = "Saved Reviews Board"
+            st.rerun()
+
+
+        with tabs[5]:
+            selected_version = st.radio("Select version", ["v1", "v2"], horizontal=True, key="corr_tradeoff_version")
+            selected_detail = detail_v1 if selected_version == "v1" else detail_v2
+            selected_specs = active_specs_v1 if selected_version == "v1" else active_specs_v2
+            metric_df = get_numeric_metric_df(selected_detail, selected_specs)
+            corr_df = metric_df.corr() if not metric_df.empty else pd.DataFrame()
+
+            if metric_df.empty:
+                st.info("No numeric metrics available for scatter/correlation.")
+            else:
+                metric_options = metric_df.columns.tolist()
+                c1, c2 = st.columns(2)
+                with c1:
+                    x_metric = st.selectbox("X metric", metric_options, index=0, key="tradeoff_x_metric")
+                with c2:
+                    y_metric = st.selectbox("Y metric", metric_options, index=1 if len(metric_options) > 1 else 0, key="tradeoff_y_metric")
+
+                top1, top2 = st.columns(2)
+                with top1:
+                    st.markdown('<div class="panel-card"><div class="small-tag">Tradeoff Scatter</div>', unsafe_allow_html=True)
+                    fig = plot_tradeoff_scatter(selected_detail, x_metric, y_metric)
+                    st.pyplot(fig)
+                    plt.close(fig)
+                    st.markdown("</div>", unsafe_allow_html=True)
+                with top2:
+                    st.markdown('<div class="panel-card"><div class="small-tag">Correlation Heatmap</div>', unsafe_allow_html=True)
+                    fig = plot_correlation_heatmap(corr_df, f"Correlation Heatmap - {selected_version}")
+                    st.pyplot(fig)
+                    plt.close(fig)
+                    st.markdown("</div>", unsafe_allow_html=True)
+
+                corr_show = corr_df.reset_index().rename(columns={"index": "metric"})
+                render_review_table(corr_show, f"CORRELATION MATRIX - {selected_version.upper()}")
+
+        with tabs[6]:
+            metric_options = active_specs_v1["metric"].tolist()
+            selected_metric = st.selectbox("Select metric", metric_options, key="dist_metric")
+            spec_row = active_specs_v1.loc[active_specs_v1["metric"] == selected_metric].iloc[0]
+            rule_type = spec_row["rule_type"]
+            spec_value = float(spec_row["spec_value"])
+            a, b = st.columns(2)
+            with a:
+                st.markdown('<div class="panel-card"><div class="small-tag">Histogram</div>', unsafe_allow_html=True)
+                fig = plot_histogram(v1, v2, selected_metric, rule_type, spec_value)
+                st.pyplot(fig)
+                plt.close(fig)
+                st.markdown("</div>", unsafe_allow_html=True)
+            with b:
+                st.markdown('<div class="panel-card"><div class="small-tag">CDF</div>', unsafe_allow_html=True)
+                fig = plot_cdf(v1, v2, selected_metric, rule_type, spec_value)
+                st.pyplot(fig)
+                plt.close(fig)
+                st.markdown("</div>", unsafe_allow_html=True)
+
+        with tabs[7]:
+            if not show_raw:
+                st.info("Enable 'Show raw data tables' from the sidebar to view raw tables here.")
+            else:
+                render_review_table(edited_specs, "ACTIVE SPECS")
+                render_review_table(v1, "RAW DATA - MC_v1")
+                render_review_table(v2, "RAW DATA - MC_v2")
