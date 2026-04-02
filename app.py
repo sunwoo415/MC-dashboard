@@ -132,6 +132,30 @@ hr.soft { border:none; border-top:1px solid #f1ddd1; margin:0.8rem 0 1rem 0; }
     padding: 10px 12px;
     margin-top: 10px;
 }
+.board-id {
+    color: var(--sk-red);
+    font-weight: 800;
+}
+.board-proj {
+    color: var(--sk-text);
+    font-weight: 800;
+}
+.board-ver {
+    color: #8b3a10;
+    font-weight: 800;
+}
+.board-meta-label {
+    color: #8b3a10;
+    font-weight: 800;
+}
+.board-meta-value {
+    color: var(--sk-muted);
+    font-weight: 600;
+}
+.board-note-label {
+    color: var(--sk-red);
+    font-weight: 800;
+}
 .board-yield {
     display: flex;
     gap: 10px;
@@ -153,7 +177,7 @@ hr.soft { border:none; border-top:1px solid #f1ddd1; margin:0.8rem 0 1rem 0; }
     text-align: left !important;
     justify-content: flex-start !important;
     align-items: flex-start !important;
-    white-space: pre-wrap !important;
+    white-space: normal !important;
     line-height: 1.55 !important;
     border-radius: 24px !important;
     border: 1px solid #f2d7c3 !important;
@@ -161,7 +185,7 @@ hr.soft { border:none; border-top:1px solid #f1ddd1; margin:0.8rem 0 1rem 0; }
     background: linear-gradient(180deg, #ffffff 0%, #fff7f1 100%) !important;
     color: var(--sk-text) !important;
     box-shadow: 0 16px 34px rgba(17,24,39,0.08) !important;
-    padding: 16px 18px !important;
+    padding: 18px 20px !important;
     font-weight: 650 !important;
 }
 .board-load-btn button:hover {
@@ -258,17 +282,18 @@ hr.soft { border:none; border-top:1px solid #f1ddd1; margin:0.8rem 0 1rem 0; }
     text-align: left !important;
     justify-content: flex-start !important;
     align-items: flex-start !important;
-    white-space: pre-wrap !important;
-    line-height: 1.46 !important;
+    white-space: normal !important;
+    line-height: 1.54 !important;
     border-radius: 24px !important;
     border: 1px solid #f2d7c3 !important;
     border-left: 9px solid var(--sk-orange) !important;
     background: linear-gradient(180deg, #ffffff 0%, #fff7f1 100%) !important;
     color: var(--sk-text) !important;
     box-shadow: 0 16px 34px rgba(17,24,39,0.08) !important;
-    padding: 16px 18px !important;
+    padding: 18px 20px !important;
     font-weight: 620 !important;
-    font-size: 0.91rem !important;
+    font-family: "Segoe UI", Arial, sans-serif !important;
+    font-size: 0.94rem !important;
 }
 .element-container:has(.board-load-btn-marker) + div button:hover {
     border-color: #efb28d !important;
@@ -817,14 +842,17 @@ if main_view == "Saved Reviews Board":
             card_col, x_col = st.columns([26, 1])
             with card_col:
                 st.markdown('<div class="board-load-btn-marker"></div>', unsafe_allow_html=True)
-                display_note = note.replace("\n", " ")
-                if len(display_note) > 80:
-                    display_note = display_note[:80] + "..."
+                display_note = note.replace("\n", " ").strip()
+                if len(display_note) > 72:
+                    display_note = display_note[:72] + "..."
                 label = (
-                    f"#{rid}  {row['project_name']}  ·  {row['design_version']}\n"
-                    f"Saved {row['saved_at']}   |   Reviewer {row['reviewer'] if row['reviewer'] else '-'}   |   Source {source}\n"
-                    f"Yield   v1 {fmt_value('overall_v1_yield', row['overall_v1_yield'])}   /   v2 {fmt_value('overall_v2_yield', row['overall_v2_yield'])}\n"
-                    f"Note    {display_note}"
+                    f"#{rid}  {row['project_name']}  ·  {row['design_version']}\n\n"
+                    f"SAVED      {row['saved_at']}\n"
+                    f"REVIEWER   {row['reviewer'] if row['reviewer'] else '-'}\n"
+                    f"SOURCE     {source}\n\n"
+                    f"YIELD      v1 {fmt_value('overall_v1_yield', row['overall_v1_yield'])}   /   "
+                    f"v2 {fmt_value('overall_v2_yield', row['overall_v2_yield'])}\n\n"
+                    f"NOTE       {display_note}"
                 )
                 if st.button(label, key=f"board_card_load_{rid}", use_container_width=True):
                     loaded_review = load_review_from_db(rid)
