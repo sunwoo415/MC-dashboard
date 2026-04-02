@@ -1,4 +1,5 @@
 import sqlite3
+import json
 from datetime import datetime
 
 import matplotlib.pyplot as plt
@@ -400,10 +401,10 @@ def load_review_from_db(review_id):
     if df.empty:
         return None
     row = df.iloc[0].to_dict()
-    row["specs_df"] = pd.read_json(row["specs_json"])
-    row["comments_df"] = pd.read_json(row["comments_json"])
-    row["v1_df"] = pd.read_json(row["v1_json"]) if row.get("v1_json") else None
-    row["v2_df"] = pd.read_json(row["v2_json"]) if row.get("v2_json") else None
+    row["specs_df"] = json_records_to_df(row["specs_json"])
+    row["comments_df"] = json_records_to_df(row["comments_json"])
+    row["v1_df"] = json_records_to_df(row["v1_json"]) if row.get("v1_json") else None
+    row["v2_df"] = json_records_to_df(row["v2_json"]) if row.get("v2_json") else None
     return row
 
 def delete_review_from_db(review_id):
@@ -412,6 +413,28 @@ def delete_review_from_db(review_id):
     cur.execute("DELETE FROM reviews WHERE review_id = ?", (review_id,))
     conn.commit()
     conn.close()
+
+
+def json_records_to_df(value):
+    if value is None:
+        return None
+    if isinstance(value, float) and pd.isna(value):
+        return None
+    if isinstance(value, bytes):
+        value = value.decode("utf-8")
+    if isinstance(value, str):
+        value = value.strip()
+        if not value:
+            return None
+        data = json.loads(value)
+    elif isinstance(value, list):
+        data = value
+    else:
+        data = value
+    if data is None:
+        return None
+    return pd.DataFrame(data)
+
 
 # ---------------- utils ----------------
 def fmt_value(col, val):
@@ -900,8 +923,8 @@ if main_view == "Current Review / Analysis":
             st.error(f"Failed to read workbook: {e}")
             st.stop()
     elif st.session_state.loaded_v1_json and st.session_state.loaded_v2_json:
-        v1 = pd.read_json(st.session_state.loaded_v1_json)
-        v2 = pd.read_json(st.session_state.loaded_v2_json)
+        v1 = json_records_to_df(st.session_state.loaded_v1_json)
+        v2 = json_records_to_df(st.session_state.loaded_v2_json)
         source_filename = "loaded_from_db"
         review_ready = True
     else:
@@ -924,7 +947,7 @@ if main_view == "Current Review / Analysis":
         # specs
         specs_base = normalize_specs(specs_from_file, v1, v2)
         if st.session_state.loaded_specs_json:
-            specs_base = pd.read_json(st.session_state.loaded_specs_json).copy()
+            specs_base = json_records_to_df(st.session_state.loaded_specs_json).copy()
             if "enabled" in specs_base.columns:
                 specs_base["enabled"] = specs_base["enabled"].astype(str).str.upper()
 
@@ -967,7 +990,7 @@ if main_view == "Current Review / Analysis":
             "comment": [""] * len(active_specs_v1),
         })
         if st.session_state.loaded_comments_json:
-            loaded_comments = pd.read_json(st.session_state.loaded_comments_json).copy()
+            loaded_comments = json_records_to_df(st.session_state.loaded_comments_json).copy()
             if not loaded_comments.empty:
                 comment_base = comment_base.drop(columns=["status", "owner", "comment"]).merge(loaded_comments, on="metric", how="left")
                 comment_base["status"] = comment_base["status"].fillna("open")
